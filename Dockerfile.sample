@@ -1,0 +1,23 @@
+# Sample Dockerfile with intentional issues
+FROM ubuntu:latest
+
+# Running as root (security issue)
+USER root
+
+# Multiple RUN commands (optimization issue)
+RUN apt-get update
+RUN apt-get install -y python3 vim curl wget
+
+# Hardcoded secret (security issue)
+ENV API_KEY="secret123"
+
+# Using ADD instead of COPY (security issue)
+ADD app.py /app/
+
+# Downloading over HTTP (security issue)
+RUN wget http://example.com/file.tar.gz
+
+# Exposing SSH port (best practice issue)
+EXPOSE 22 8080
+
+CMD ["python3", "/app/app.py"]
